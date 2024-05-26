@@ -1,4 +1,10 @@
 package com.example.projectbyumang.Models;
 
-public class Category {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Category extends BaseModel{
+    private String title;
 }
