@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Rating extends BaseModel{
-    private Integer rate;
+public class Rating{
+    private Double rate;
     private Integer count;
 }
