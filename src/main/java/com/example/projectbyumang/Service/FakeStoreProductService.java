@@ -1,6 +1,7 @@
 package com.example.projectbyumang.Service;
 
 import com.example.projectbyumang.DTOS.FakeStoreProductDTO;
+import com.example.projectbyumang.DTOS.ProductResponseDTO;
 import com.example.projectbyumang.Models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -83,6 +84,37 @@ public class FakeStoreProductService implements ProductService {
             categories.add(category);
         }
         return categories;
+    }
+
+    @Override
+    public Product updateProduct(Long id,
+                                 String title,
+                                 String description,
+                                 String category,
+                                 double price,
+                                 String image) {
+        // Get the existing product
+        Product existingProduct = getProductById(id);
+
+        if (existingProduct != null) {
+            // Create productResponseDTO object and set values
+            ProductResponseDTO productResponseDTO = new ProductResponseDTO();
+            productResponseDTO.setId(id);
+            productResponseDTO.setImage(image);
+            productResponseDTO.setTitle(title);
+            productResponseDTO.setCategory(category);
+            productResponseDTO.setDescription(description);
+            productResponseDTO.setPrice(price);
+
+
+            // Use RestTemplate to send the update
+            restTemplate.put("https://fakestoreapi.com/products/" + id,
+                    productResponseDTO, ProductResponseDTO.class);
+
+            // Return the updated product
+            return productResponseDTO.requestProduct();
+        }
+        return null;
     }
 
 }

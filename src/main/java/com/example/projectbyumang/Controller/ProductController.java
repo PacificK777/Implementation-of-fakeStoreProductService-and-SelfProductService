@@ -62,4 +62,14 @@ public class ProductController {
     public List<String> getAllCategories(){
         return productService.getAllCategories();
     }
+
+    @PutMapping("/products/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody RequestBodyProductDTO request){
+            return productService.updateProduct(id,
+                                                request.getTitle(),
+                                                request.getDescription(),
+                                                request.getImage(),
+                                                request.getPrice(),
+                                                request.getCategory());
+    }
 }

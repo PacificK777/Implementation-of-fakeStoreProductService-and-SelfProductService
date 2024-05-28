@@ -22,4 +22,11 @@ public interface ProductService {
 
     List<String> getAllCategories();
 
+    Product updateProduct(Long id,
+                          String title,
+                          String description,
+                          String category,
+                          double price,
+                          String image);
+
 }
