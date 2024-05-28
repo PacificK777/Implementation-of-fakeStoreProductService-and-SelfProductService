@@ -6,6 +6,8 @@ import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
     private final ProductService productService;
@@ -39,5 +41,25 @@ public class ProductController {
         responseDTO.setCategory(product.getCategory());
 
         return responseDTO;
+    }
+
+    @GetMapping("/products")
+    public List<Product> getAllProducts(){
+        return productService.getAllProducts();
+    }
+
+    @DeleteMapping("/products/{id}")
+    public Product deleteProductById(@PathVariable("id") Long id){
+        return productService.deleteProductById(id);
+    }
+
+    @GetMapping("/products/category/{category}")
+    public List<Product> getAllProductsByCategory(@PathVariable("category") String category){
+        return productService.getProductsByCategory(category);
+    }
+
+    @GetMapping("/products/categories")
+    public List<String> getAllCategories(){
+        return productService.getAllCategories();
     }
 }

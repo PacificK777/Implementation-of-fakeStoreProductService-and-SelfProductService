@@ -5,6 +5,9 @@ import com.example.projectbyumang.Models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service("fakeStore")
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
@@ -40,4 +43,46 @@ public class FakeStoreProductService implements ProductService {
 
         return fakeStoreProductDTO1.toProduct();
     }
+
+    @Override
+    public List<Product> getAllProducts() {
+        List<Product> products = new ArrayList<>();
+        FakeStoreProductDTO[] fakeStoreProductDTOS = restTemplate
+                .getForObject("https://fakestoreapi.com/products", FakeStoreProductDTO[].class);
+        for(FakeStoreProductDTO fakeStoreProductDTO : fakeStoreProductDTOS){
+                products.add(fakeStoreProductDTO.toProduct());
+        }
+        return products;
+    }
+
+    @Override
+    public Product deleteProductById(Long id) {
+        Product productToDelete = getProductById(id);
+                restTemplate.delete("https://fakestoreapi.com/products/"+id);
+                return productToDelete;
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String category) {
+        List<Product> productsByCategory = new ArrayList<>();
+        FakeStoreProductDTO[] fakeStoreProductDTOS =restTemplate
+                .getForObject("https://fakestoreapi.com/products/category/"+category, FakeStoreProductDTO[].class);
+        for(FakeStoreProductDTO fakeStoreProductDTO: fakeStoreProductDTOS){
+            productsByCategory.add(fakeStoreProductDTO.toProduct());
+        }
+        return productsByCategory;
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+        String[] categoriesArray = restTemplate.getForObject(
+                "https://fakestoreapi.com/products/categories", String[].class);
+
+        List<String> categories = new ArrayList<>();
+        for (String category : categoriesArray) {
+            categories.add(category);
+        }
+        return categories;
+    }
+
 }
