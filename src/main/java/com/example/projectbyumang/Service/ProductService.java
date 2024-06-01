@@ -1,12 +1,13 @@
 package com.example.projectbyumang.Service;
 
+import com.example.projectbyumang.Exception.ProductNotFoundException;
 import com.example.projectbyumang.Models.Product;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Product getProductById(Long id);
+    Product getProductById(Long id) throws ProductNotFoundException;
 
     Product createAProduct(String title,
                            double price,

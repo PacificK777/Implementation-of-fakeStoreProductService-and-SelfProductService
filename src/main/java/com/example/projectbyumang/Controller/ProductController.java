@@ -2,6 +2,7 @@ package com.example.projectbyumang.Controller;
 
 import com.example.projectbyumang.DTOS.ProductResponseDTO;
 import com.example.projectbyumang.DTOS.RequestBodyProductDTO;
+import com.example.projectbyumang.Exception.ProductNotFoundException;
 import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +19,10 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProductById(@PathVariable("id") Long id) {
+    public Product getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+        if(id == null){
+            throw new ProductNotFoundException("Product id cannot be null");
+        }
         return productService.getProductById(id);
     }
 
@@ -50,7 +54,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public Product deleteProductById(@PathVariable("id") Long id){
+    public Product deleteProductById(@PathVariable("id") Long id) {
         return productService.deleteProductById(id);
     }
 

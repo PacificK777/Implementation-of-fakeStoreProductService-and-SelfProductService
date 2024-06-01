@@ -1,4 +1,5 @@
 package com.example.projectbyumang.Service;
+import com.example.projectbyumang.Exception.ProductNotFoundException;
 import com.example.projectbyumang.Models.Category;
 import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Repositories.CategoryRepository;
@@ -19,8 +20,12 @@ public class SelfProductService implements ProductService{
 
 
     @Override
-    public Product getProductById(Long id) {
-        return productRepository.findProductById(id);
+    public Product getProductById(Long id) throws ProductNotFoundException {
+        Product product = productRepository.findProductById(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
+        return product;
     }
 
     @Override
