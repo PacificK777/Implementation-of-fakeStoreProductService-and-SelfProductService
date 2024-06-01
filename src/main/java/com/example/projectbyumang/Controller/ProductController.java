@@ -54,12 +54,12 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public Product deleteProductById(@PathVariable("id") Long id) {
+    public Product deleteProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
         return productService.deleteProductById(id);
     }
 
     @GetMapping("/products/category/{category}")
-    public List<Product> getAllProductsByCategory(@PathVariable("category") String category){
+    public List<Product> getAllProductsByCategory(@PathVariable("category") String category) throws ProductNotFoundException {
         return productService.getProductsByCategory(category);
     }
 
@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @PutMapping("/products/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody RequestBodyProductDTO request){
+    public Product updateProduct(@PathVariable Long id, @RequestBody RequestBodyProductDTO request) throws ProductNotFoundException {
             return productService.updateProduct(id,
                                                 request.getTitle(),
                                                 request.getDescription(),

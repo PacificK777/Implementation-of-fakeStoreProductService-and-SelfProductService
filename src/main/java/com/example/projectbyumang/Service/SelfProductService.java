@@ -6,6 +6,7 @@ import com.example.projectbyumang.Repositories.CategoryRepository;
 import com.example.projectbyumang.Repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("selfProductService")
@@ -53,22 +54,36 @@ public class SelfProductService implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return productRepository.findAll();
     }
 
     @Override
-    public Product deleteProductById(Long id) {
-        return null;
+    public Product deleteProductById(Long id) throws ProductNotFoundException {
+        Product product = productRepository.findProductById(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
+        productRepository.delete(product);
+        return product;
     }
 
     @Override
-    public List<Product> getProductsByCategory(String category) {
-        return List.of();
+    public List<Product> getProductsByCategory(String category) throws ProductNotFoundException {
+        Category categoryFromDatabase = categoryRepository.findCategoryByCatTitle(category);
+        if (categoryFromDatabase == null) {
+            throw new ProductNotFoundException("Category " + category + " not found");
+        }
+        return productRepository.findProductsByCategory(categoryFromDatabase);
     }
 
     @Override
     public List<String> getAllCategories() {
-        return List.of();
+        List<Category> categories = categoryRepository.findAll();
+        List<String> categoryTitles = new ArrayList<>();
+        for (Category category : categories) {
+            categoryTitles.add(category.getCatTitle());
+        }
+        return categoryTitles;
     }
 
     @Override
@@ -77,7 +92,23 @@ public class SelfProductService implements ProductService{
                                  String description,
                                  String category,
                                  double price,
-                                 String image) {
-        return null;
+                                 String image) throws ProductNotFoundException {
+        Product product = productRepository.findProductById(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
+        product.setTitle(title);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setImage(image);
+        Category categoryFromDatabase = categoryRepository.findCategoryByCatTitle(category);
+        if (categoryFromDatabase == null) {
+            Category newCategory = new Category();
+            newCategory.setCatTitle(category);
+            categoryRepository.save(newCategory);
+            categoryFromDatabase = newCategory;
+        }
+        product.setCategory(categoryFromDatabase);
+        return productRepository.save(product);
     }
 }

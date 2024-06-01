@@ -17,9 +17,9 @@ public interface ProductService {
 
     List<Product> getAllProducts();
 
-    Product deleteProductById(Long id);
+    Product deleteProductById(Long id) throws ProductNotFoundException;
 
-    List<Product> getProductsByCategory(String category);
+    List<Product> getProductsByCategory(String category) throws ProductNotFoundException;
 
     List<String> getAllCategories();
 
@@ -28,6 +28,6 @@ public interface ProductService {
                           String description,
                           String category,
                           double price,
-                          String image);
+                          String image) throws ProductNotFoundException;
 
 }
