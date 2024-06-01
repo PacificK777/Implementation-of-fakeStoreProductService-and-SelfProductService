@@ -1,5 +1,6 @@
 package com.example.projectbyumang.DTOS;
 
+import com.example.projectbyumang.Models.Category;
 import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Models.Rating;
 import lombok.Getter;
@@ -37,9 +38,13 @@ public class FakeStoreProductDTO {
         product.setPrice(price);
         product.setTitle(title);
         product.setImage(image);
-        product.setCategory(category);
         product.setRating(rating);
 
+        Category category1 = new Category();
+        category1.getCatTitle();
+
+        product.setCategory(category1);
+        product.setCategory(category1);
         return product;
     }
 }

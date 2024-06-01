@@ -4,6 +4,7 @@ import com.example.projectbyumang.DTOS.ProductResponseDTO;
 import com.example.projectbyumang.DTOS.RequestBodyProductDTO;
 import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService) {
         this.productService = productService;
     }
 
@@ -38,7 +39,7 @@ public class ProductController {
         responseDTO.setPrice(product.getPrice());
         responseDTO.setDescription(product.getDescription());
         responseDTO.setImage(product.getImage());
-        responseDTO.setCategory(product.getCategory());
+        responseDTO.setCategory(product.getCategory().getCatTitle());
 
         return responseDTO;
     }

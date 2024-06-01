@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Service("fakeStore")
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
@@ -19,6 +21,11 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
+
+        if(id == 0) {
+        throw new IllegalArgumentException("Invalid ProductId, try again !!");
+        }
+
         FakeStoreProductDTO fakeStoreProductDTO =  restTemplate.getForObject
                 ("https://fakestoreapi.com/products/"+ id,
                 FakeStoreProductDTO.class);

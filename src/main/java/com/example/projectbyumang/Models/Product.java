@@ -1,15 +1,23 @@
 package com.example.projectbyumang.Models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 public class Product extends BaseModel {
     private String title;
     private String description;
-    private double price;
+    private Double price;
     private String image;
-    private String category;
+
+    @ManyToOne
+    private Category category;
+
+    @OneToOne
     private Rating rating;
 }

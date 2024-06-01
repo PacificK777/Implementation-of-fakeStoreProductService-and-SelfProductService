@@ -1,5 +1,6 @@
 package com.example.projectbyumang.DTOS;
 
+import com.example.projectbyumang.Models.Category;
 import com.example.projectbyumang.Models.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +21,14 @@ public class ProductResponseDTO {
         product.setId(this.id);
         product.setTitle(this.title);
         product.setDescription(this.description);
-        product.setCategory(this.category);
         product.setPrice(this.price);
         product.setImage(this.image);
+
+
+        Category category1 = new Category();
+        category1.getCatTitle();
+
+        product.setCategory(category1);
         return product;
     }
 }
