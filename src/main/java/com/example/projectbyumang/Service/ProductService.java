@@ -31,7 +31,7 @@ public interface ProductService {
                           double price,
                           String image) throws ProductNotFoundException;
 
-    Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo);
-
     String generateRandomProducts();
+
+    Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo);
 }

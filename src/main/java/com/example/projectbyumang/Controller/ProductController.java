@@ -80,20 +80,18 @@ public class ProductController {
                 request.getCategory());
     }
 
-
-    @GetMapping("/products/{pageNo}/{pageSize}")
-    public ResponseEntity<List<Product>> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo,
-                                                             @PathVariable("pageSize") Integer pageSize) {
-        Page<Product> productPage = productService.getPaginatedProduct(pageSize, pageNo);
-        System.out.println("ProductPage: " + productPage);
-        return ResponseEntity.ok(productPage.getContent());
-
-    }
-
-
     @PostMapping("/products/generate")
     @ResponseBody
     public String generateRandomProducts() {
         return productService.generateRandomProducts();
+    }
+
+    //PAGINATION
+    @GetMapping("/products/{pageNo}/{pageSize}")
+    public List<Product> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo,
+                                             @PathVariable("pageSize") Integer pageSize) {
+        Page<Product> productPage = productService.getPaginatedProduct(pageNo,pageSize);
+        System.out.println("ProductPage: " + productPage);
+        return productPage.getContent();
     }
 }
