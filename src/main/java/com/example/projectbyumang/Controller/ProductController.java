@@ -87,10 +87,18 @@ public class ProductController {
     }
 
     //PAGINATION
-    @GetMapping("/products/{pageNo}/{pageSize}")
+    @GetMapping("/products/all/{pageNo}/{pageSize}")
     public List<Product> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo,
                                              @PathVariable("pageSize") Integer pageSize) {
         Page<Product> productPage = productService.getPaginatedProduct(pageNo,pageSize);
+        System.out.println("ProductPage: " + productPage);
+        return productPage.getContent();
+    }
+
+    @GetMapping("/products/all/{pageNo}")
+    public List<Product> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo) {
+        int pageSize = 10; // Set the number of products per page to 10
+        Page<Product> productPage = productService.getPaginatedProduct(pageNo, pageSize);
         System.out.println("ProductPage: " + productPage);
         return productPage.getContent();
     }
