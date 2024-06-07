@@ -3,6 +3,7 @@ package com.example.projectbyumang.Service;
 import com.example.projectbyumang.DTOS.FakeStoreProductDTO;
 import com.example.projectbyumang.DTOS.ProductResponseDTO;
 import com.example.projectbyumang.Models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -121,6 +122,16 @@ public class FakeStoreProductService implements ProductService {
             // Return the updated product
             return productResponseDTO.requestProduct();
         }
+        return null;
+    }
+
+    @Override
+    public Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo) {
+        return null;
+    }
+
+    @Override
+    public String generateRandomProducts() {
         return null;
     }
 

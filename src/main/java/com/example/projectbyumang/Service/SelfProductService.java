@@ -4,10 +4,15 @@ import com.example.projectbyumang.Models.Category;
 import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Repositories.CategoryRepository;
 import com.example.projectbyumang.Repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Service("selfProductService")
 public class SelfProductService implements ProductService{
@@ -110,5 +115,30 @@ public class SelfProductService implements ProductService{
         }
         product.setCategory(categoryFromDatabase);
         return productRepository.save(product);
+    }
+
+    @Override
+    public Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageSize, pageNo);
+        Page<Product> product = productRepository.findAll(pageable);
+        return product;
+    }
+
+
+    @Override
+    public String generateRandomProducts() {
+        Random random = new Random();
+
+        for (int i = 0; i < 20; i++) {
+            String title = "Product " + UUID.randomUUID().toString();
+            double rawPrice = 50.0 + (150.0 - 50.0) * random.nextDouble();
+            double price = Math.round(rawPrice * 100.0) / 100.0;
+            String description = "Description for " + title;
+            String imageUrl = "http://example.com/product-" + i + ".jpg";
+            String category = "Category " + (i % 5 + 1);  // Five categories: "Category 1" to "Category 5"
+
+            createAProduct(title, price, description, imageUrl, category);
+        }
+        return "Products generated successfully!! Check your database.";
     }
 }

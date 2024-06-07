@@ -2,6 +2,7 @@ package com.example.projectbyumang.Service;
 
 import com.example.projectbyumang.Exception.ProductNotFoundException;
 import com.example.projectbyumang.Models.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -30,4 +31,7 @@ public interface ProductService {
                           double price,
                           String image) throws ProductNotFoundException;
 
+    Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo);
+
+    String generateRandomProducts();
 }
