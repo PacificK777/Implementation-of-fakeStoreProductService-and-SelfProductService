@@ -1,4 +1,5 @@
 package com.example.projectbyumang.Service;
+
 import com.example.projectbyumang.Exception.ProductNotFoundException;
 import com.example.projectbyumang.Models.Category;
 import com.example.projectbyumang.Models.Product;
@@ -122,6 +123,11 @@ public class SelfProductService implements ProductService{
         Pageable pageable = PageRequest.of(pageSize, pageNo);
         Page<Product> product = productRepository.findAll(pageable);
         return product;
+    }
+
+    @Override
+    public Page<Product> getPaginatedProduct(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
 

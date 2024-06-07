@@ -3,6 +3,8 @@ package com.example.projectbyumang.Service;
 import com.example.projectbyumang.Exception.ProductNotFoundException;
 import com.example.projectbyumang.Models.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -33,5 +35,9 @@ public interface ProductService {
 
     String generateRandomProducts();
 
-    Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo);
+//    Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo);
+
+    Page<Product> getPaginatedProduct(Integer pageNo, Integer pageSize);
+
+    Page<Product> getPaginatedProduct(Pageable pageable);
 }

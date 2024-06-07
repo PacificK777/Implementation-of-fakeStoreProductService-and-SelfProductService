@@ -7,6 +7,9 @@ import com.example.projectbyumang.Models.Product;
 import com.example.projectbyumang.Service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,17 +91,28 @@ public class ProductController {
 
     //PAGINATION
     @GetMapping("/products/all/{pageNo}/{pageSize}")
-    public List<Product> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo,
-                                             @PathVariable("pageSize") Integer pageSize) {
+    public List<Product> getPaginatedProductWithPageSize(@PathVariable("pageNo") Integer pageNo,
+                                                         @PathVariable("pageSize") Integer pageSize) {
         Page<Product> productPage = productService.getPaginatedProduct(pageNo,pageSize);
         System.out.println("ProductPage: " + productPage);
         return productPage.getContent();
     }
 
-    @GetMapping("/products/all/{pageNo}")
-    public List<Product> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo) {
+    //TO DISPLAY 10 PRODUCTS PER PAGE
+    @GetMapping("/products/all/default/{pageNo}")
+    public List<Product> getPaginatedProductDefaultPageSize(@PathVariable("pageNo") Integer pageNo) {
         int pageSize = 10; // Set the number of products per page to 10
         Page<Product> productPage = productService.getPaginatedProduct(pageNo, pageSize);
+        System.out.println("ProductPage: " + productPage);
+        return productPage.getContent();
+    }
+
+    //TO DISPLAY 10 PRODUCTS PER PAGE IN DESC ORDER
+    @GetMapping("/products/all/desc/{pageNo}")
+    public List<Product> getPaginatedProductDesc(@PathVariable("pageNo") Integer pageNo) {
+        int pageSize = 10; // Set the number of products per page to 10
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "price");
+        Page<Product> productPage = productService.getPaginatedProduct(pageable);
         System.out.println("ProductPage: " + productPage);
         return productPage.getContent();
     }

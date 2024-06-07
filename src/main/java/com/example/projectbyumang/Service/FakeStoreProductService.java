@@ -4,6 +4,8 @@ import com.example.projectbyumang.DTOS.FakeStoreProductDTO;
 import com.example.projectbyumang.DTOS.ProductResponseDTO;
 import com.example.projectbyumang.Models.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -126,14 +128,17 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo) {
+    public String generateRandomProducts() {
         return null;
     }
 
-
+    @Override
+    public Page<Product> getPaginatedProduct(Integer pageNo, Integer pageSize) {
+        return null;
+    }
 
     @Override
-    public String generateRandomProducts() {
+    public Page<Product> getPaginatedProduct(Pageable pageable) {
         return null;
     }
 
